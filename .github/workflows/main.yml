@@ -1,5 +1,8 @@
 name: Publish to staging
-on: push
+on:
+  push:
+    branches:
+      - 'dev'
 jobs:
   dev:
     runs-on: ubuntu-latest
