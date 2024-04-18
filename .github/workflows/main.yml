@@ -23,8 +23,8 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source-directory: .
-          destination-github-username: 'cicd'
-          destination-repository-name: 'test-action-pages/staging'
+          destination-github-username: 'test-action-pages'
+          destination-repository-name: 'staging'
           user-email: cicd@nehfamim.com
           commit-message: $GITHUB_REF
           target-branch: main
