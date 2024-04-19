@@ -23,7 +23,7 @@ jobs:
         uses: rossjrw/pr-preview-action@v1
         if: contains(fromJson('["opened", "reopened", "synchronize"]'), github.event.action)
         with:
-          preview-branch: main
+          preview-branch: gh-pages
           source-dir: .
       - name: Delete merged PR previews
         uses: rossjrw/pr-preview-action@v1

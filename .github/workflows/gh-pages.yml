@@ -1,0 +1,30 @@
+name: Copy to gh-pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-to-gh-pages:
+    permissions: write-all
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Copy
+        uses: actions/checkout@v3
+        with:
+            submodules: recursive
+        env:
+            SRC_FOLDER_PATH: '.'
+            EXCLUSION: ''
+            TARGET_BRANCH: 'gh-pages'
+        run: |
+            git config --global user.name 'GitHub Action'
+            git config --global user.email 'action@github.com'
+            git fetch
+            git checkout $TARGET_BRANCH
+            git add $EXCLUSION
+            git checkout ${GITHUB_REF##*/} -- $files
+            git reset
+            git diff-index --quiet HEAD ||  git commit -am "Deploy files from $GITHUB_REF"
+            git push origin $TARGET_BRANCH
