@@ -1,32 +1,30 @@
-# This is a basic workflow to help you get started with Actions
-
-name: Push to staging
+# .github/workflows/preview.yml
+name: Deploy PR previews
 
 on:
-  push:
-    branches: [ dev ]
   pull_request:
-    branches: [ dev ]
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+concurrency: preview-${{ github.ref }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    container: pandoc/latex
+  deploy-preview:
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
-      - name: Install mustache (to update the date)
-        run:  apk add ruby && gem install mustache
-      - name: Pushes to another repository
-        id: push_directory
-        uses: cpina/github-action-push-to-another-repository@target-branch
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install and Build
+        if: github.event.action != 'closed' # You might want to skip the build if the PR has been closed
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy preview
+        uses: rossjrw/pr-preview-action@v1
         with:
-          source-directory: .
-          destination-github-username: 'cicd'
-          destination-repository-name: 'test-action-pages/staging'
-          user-email: cicd@nehfamim.com
-          commit-message: $GITHUB_REF
-          target-branch: main
-      - name: Test get variable exported by push-to-another-repository
-        run: echo $DESTINATION_CLONED_DIRECTORY
+          source-dir: ./build/
