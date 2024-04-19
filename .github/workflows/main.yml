@@ -20,7 +20,7 @@ jobs:
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
-        if: contains(['opened', 'reopened', 'synchronize'], github.event.action)
+        if: contains(fromJson('["opened", "reopened", "synchronize"]'), github.event.action)
         with:
           preview-branch: main
           source-dir: .
