@@ -10,10 +10,10 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-20.04
     steps:
-      - name: Copy
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
             submodules: recursive
+      - name: Copy
         env:
             SRC_FOLDER_PATH: '.'
             EXCLUSION: ''
