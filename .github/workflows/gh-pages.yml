@@ -18,6 +18,8 @@ jobs:
             SRC_FOLDER_PATH: '.'
             TARGET_BRANCH: 'gh-pages'
         run: |
+            ls $SRC_FOLDER_PATH
+            pwd
             files=$(find $SRC_FOLDER_PATH -path "./.git" -prune -type f) # get the file list
             echo "should echo"
             echo "files: $files"
