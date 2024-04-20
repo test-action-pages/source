@@ -8,7 +8,7 @@ on:
 jobs:
   push-to-gh-pages:
     permissions: write-all
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -19,7 +19,7 @@ jobs:
             TARGET_BRANCH: 'gh-pages'
         run: |
             files=$(find $SRC_FOLDER_PATH -path "./.git" -prune -type f) # get the file list
-            echo $files
+            echo "$files"
             git config --global user.name 'GitHub Action'
             git config --global user.email 'action@github.com'
             git fetch                         # fetch branches
