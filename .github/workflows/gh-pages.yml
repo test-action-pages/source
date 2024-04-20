@@ -20,6 +20,11 @@ jobs:
         run: |
             ls $SRC_FOLDER_PATH
             pwd
+            echo 1
+            echo $(find $SRC_FOLDER_PATH -type f)
+            echo 2
+            echo $(find $SRC_FOLDER_PATH -type f -not -path "./.git/*")
+            echo 3
             files=$(find $SRC_FOLDER_PATH -path "./.git" -prune -type f) # get the file list
             echo "should echo"
             echo "files: $files"
